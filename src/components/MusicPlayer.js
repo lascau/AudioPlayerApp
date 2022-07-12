@@ -1,19 +1,20 @@
 import React, { useState, useRef } from "react";
-import Stack from "@mui/material/Stack";
-import Slider from "@mui/material/Slider";
-import VolumeDown from "@mui/icons-material/VolumeDown";
-import VolumeUp from "@mui/icons-material/VolumeUp";
+import {
+    Stack,
+    Slider,
+    LinearProgress,
+    Typography,
+    Box,
+    Card,
+} from "@mui/material";
+import { VolumeDown, VolumeUp } from "@mui/icons-material";
 import PauseIcon from "@mui/icons-material/Pause";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import ReplayIcon from "@mui/icons-material/Replay";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import Card from "@mui/material/Card";
-import LinearProgress from "@mui/material/LinearProgress";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import Box from "@mui/material/Box";
 import AlbumIcon from "@mui/icons-material/Album";
-import Typography from "@mui/material/Typography";
 
 const cardStyle = {
     width: "500px",
@@ -101,7 +102,6 @@ export const MusicPlayer = (props) => {
         <>
             <Card style={cardStyle}>
                 <audio ref={audioRef} src={props.musicUrl} preload="metadata" />
-
                 {audioDuration && (
                     <>
                         <Stack direction="row" spacing={1}>

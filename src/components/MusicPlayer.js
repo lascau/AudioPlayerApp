@@ -12,10 +12,15 @@ import LinearProgress from "@mui/material/LinearProgress";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import Box from "@mui/material/Box";
+import AlbumIcon from "@mui/icons-material/Album";
+import Typography from "@mui/material/Typography";
 
 const cardStyle = {
     width: "500px",
-    height: "800px",
+    height: "70px",
+    margin: "25px 50px",
+    padding: "25px 25px 25px 25px",
+    backgroundColor: "rgb(179, 230, 255)",
 };
 
 export const MusicPlayer = (props) => {
@@ -25,6 +30,7 @@ export const MusicPlayer = (props) => {
     const audioRef = useRef(new Audio(props.musicUrl));
     const [audioDuration, setAudioDuration] = useState(null);
     const [audioProgress, setAudioProgress] = useState(0);
+    const [isVolumeBarVisible, setIsVolumeBarVisible] = useState(true);
 
     const display = (time) => {
         if (time) {
@@ -87,44 +93,77 @@ export const MusicPlayer = (props) => {
         setAudioProgress((audioRef.current.currentTime * 100) / audioDuration);
     };
 
+    const changeVolumeBarVisibility = () => {
+        setIsVolumeBarVisible(!isVolumeBarVisible);
+    };
+
     return (
         <>
             <Card style={cardStyle}>
                 <audio ref={audioRef} src={props.musicUrl} preload="metadata" />
+
                 {audioDuration && (
                     <>
-                        <div>
-                            {currentTime}/{display(audioDuration)}
-                        </div>
+                        <Stack direction="row" spacing={1}>
+                            <Typography
+                                variant="subtitle1"
+                                color="text.secondary"
+                                component="div"
+                            >
+                                Florin Salam
+                            </Typography>
+
+                            <AlbumIcon />
+
+                            <Stack direction="row" sx={{ width: 80 }}></Stack>
+                            <Typography component="div" variant="h6">
+                                {currentTime}/{display(audioDuration)}
+                            </Typography>
+                        </Stack>
                         <LinearProgress
                             variant="determinate"
                             value={audioProgress}
                         />
                     </>
                 )}
-                <KeyboardDoubleArrowLeftIcon onClick={leftFastForward} />
-                {isAudioPlaying ? (
-                    <PlayArrowIcon onClick={startAudio} />
-                ) : (
-                    <PauseIcon onClick={pauseAudio} />
-                )}
-                <KeyboardDoubleArrowRightIcon onClick={rightFastForward} />
-                <ReplayIcon onClick={replayAudio} />
-                <Stack spacing={2} sx={{ height: 300 }} alignItems="center">
-                    <Slider
-                        aria-label="Volume"
-                        value={_volume}
-                        orientation="vertical"
-                        onChange={changeVolume}
-                    />
-                    {_volume === 0 ? (
-                        <VolumeOffIcon />
-                    ) : _volume >= 50 ? (
-                        <VolumeUp />
-                    ) : (
-                        <VolumeDown />
-                    )}
+                <Stack direction="row" spacing={1.2}>
+                    <div onClick={changeVolumeBarVisibility}>
+                        {_volume === 0 ? (
+                            <VolumeOffIcon />
+                        ) : _volume >= 50 ? (
+                            <VolumeUp />
+                        ) : (
+                            <VolumeDown />
+                        )}
+                    </div>
+                    <Stack sx={{ width: 900 }}>
+                        {isVolumeBarVisible && (
+                            <Slider
+                                className="volume-bar"
+                                aria-label="Volume"
+                                value={_volume}
+                                onChange={changeVolume}
+                            />
+                        )}
+                    </Stack>
+                    <Stack spacing={2} sx={{ width: 300 }}></Stack>
+                    <ReplayIcon onClick={replayAudio} />
                 </Stack>
+                <Box display="flex" alignItems="center" flexDirection="column">
+                    <Stack spacing={2} direction="row">
+                        <KeyboardDoubleArrowLeftIcon
+                            onClick={leftFastForward}
+                        />
+                        {isAudioPlaying ? (
+                            <PlayArrowIcon onClick={startAudio} />
+                        ) : (
+                            <PauseIcon onClick={pauseAudio} />
+                        )}
+                        <KeyboardDoubleArrowRightIcon
+                            onClick={rightFastForward}
+                        />
+                    </Stack>
+                </Box>
             </Card>
         </>
     );

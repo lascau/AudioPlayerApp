@@ -32,6 +32,9 @@ export const MusicPlayer = (props) => {
     const [audioDuration, setAudioDuration] = useState(null);
     const [audioProgress, setAudioProgress] = useState(0);
     const [isVolumeBarVisible, setIsVolumeBarVisible] = useState(true);
+    const [timerCoundDown, setTimerCountDown] = useState(5);
+    const [istimerCountDownVisible, setIstimerCountDownVisible] =
+        useState(false);
 
     const display = (time) => {
         if (time) {
@@ -99,19 +102,21 @@ export const MusicPlayer = (props) => {
     };
 
     const audioEndedHandler = () => {
+        let delay = 4000;
+        setIstimerCountDownVisible(true);
         const startTime = Date.now();
-        let delay = 5000;
-        var notificationEverySecond = setInterval(
-            () =>
-                console.log(
-                    Math.floor((delay - (Date.now() - startTime)) / 1000)
-                ),
-            1000
-        );
+        setTimerCountDown(3);
+        const notificationEverySecond = setInterval(() => {
+            setTimerCountDown(
+                Math.floor((delay - (Date.now() - startTime)) / 1000)
+            );
+        }, 1000);
         setTimeout(() => {
             setIsAudioPlaying(false);
             props.nextSong();
             clearInterval(notificationEverySecond);
+            setIstimerCountDownVisible(false);
+            setTimerCountDown(3);
         }, delay);
     };
 
@@ -142,6 +147,17 @@ export const MusicPlayer = (props) => {
                             <Typography component="div" variant="h6">
                                 {currentTime}/{display(audioDuration)}
                             </Typography>
+                            <Stack direction="row" sx={{ width: 80 }}></Stack>
+                            {istimerCountDownVisible && (
+                                <Typography
+                                    component="div"
+                                    variant="h6"
+                                    color="red"
+                                    className="counter-down-current-number"
+                                >
+                                    {timerCoundDown}
+                                </Typography>
+                            )}
                         </Stack>
                         <LinearProgress
                             variant="determinate"
@@ -149,7 +165,6 @@ export const MusicPlayer = (props) => {
                         />
                     </>
                 )}
-
                 <Stack direction="row" spacing={1.2}>
                     <div onClick={changeVolumeBarVisibility}>
                         {_volume === 0 ? (

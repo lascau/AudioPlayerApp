@@ -32,9 +32,13 @@ export const MusicPlayer = (props) => {
     const [audioDuration, setAudioDuration] = useState(null);
     const [audioProgress, setAudioProgress] = useState(0);
     const [isVolumeBarVisible, setIsVolumeBarVisible] = useState(true);
+
+    // timers
     const [timerCoundDown, setTimerCountDown] = useState(5);
     const [istimerCountDownVisible, setIstimerCountDownVisible] =
         useState(false);
+    const [timerObject, setTimerObject] = useState(null);
+    const [notificationTimer, setNotificationTimer] = useState(null);
 
     const display = (time) => {
         if (time) {
@@ -74,6 +78,12 @@ export const MusicPlayer = (props) => {
     };
 
     const replayAudio = () => {
+        setIstimerCountDownVisible(false);
+
+        // destroy timers from memory(stop the next song play in the track)
+        clearTimeout(timerObject);
+        clearInterval(notificationTimer);
+        // replay the audio
         audioRef.current.currentTime = 0;
         audioRef.current.play();
     };
@@ -106,18 +116,20 @@ export const MusicPlayer = (props) => {
         setIstimerCountDownVisible(true);
         const startTime = Date.now();
         setTimerCountDown(3);
-        const notificationEverySecond = setInterval(() => {
+        let notificationEverySecond = setInterval(() => {
             setTimerCountDown(
                 Math.floor((delay - (Date.now() - startTime)) / 1000)
             );
         }, 1000);
-        setTimeout(() => {
+        setNotificationTimer(notificationEverySecond);
+        let timerObject = setTimeout(() => {
             setIsAudioPlaying(false);
             props.nextSong();
             clearInterval(notificationEverySecond);
             setIstimerCountDownVisible(false);
             setTimerCountDown(3);
         }, delay);
+        setTimerObject(timerObject);
     };
 
     return (

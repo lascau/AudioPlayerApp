@@ -24,7 +24,10 @@ export const PlayList = ({ songs }) => {
 
     return (
         <Grid display="flex" alignItems="center" flexDirection="column">
-            <MusicPlayer musicUrl={songs[currentSongPlayed]} />
+            <MusicPlayer
+                musicUrl={songs[currentSongPlayed]}
+                nextSong={changeToNextSong}
+            />
             <div>
                 <ArrowBackIcon onClick={changeToPrevSong} />
                 <ArrowForwardIcon onClick={changeToNextSong} />

@@ -99,7 +99,20 @@ export const MusicPlayer = (props) => {
     };
 
     const audioEndedHandler = () => {
-        setIsAudioPlaying(false);
+        const startTime = Date.now();
+        let delay = 5000;
+        var notificationEverySecond = setInterval(
+            () =>
+                console.log(
+                    Math.floor((delay - (Date.now() - startTime)) / 1000)
+                ),
+            1000
+        );
+        setTimeout(() => {
+            setIsAudioPlaying(false);
+            props.nextSong();
+            clearInterval(notificationEverySecond);
+        }, delay);
     };
 
     return (

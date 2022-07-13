@@ -25,7 +25,7 @@ const cardStyle = {
 };
 
 export const MusicPlayer = (props) => {
-    const [isAudioPlaying, setIsAudioPlaying] = useState(true);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState("00:00");
     const [_volume, setVolume] = useState(50);
     const audioRef = useRef(new Audio(props.musicUrl));
@@ -98,10 +98,20 @@ export const MusicPlayer = (props) => {
         setIsVolumeBarVisible(!isVolumeBarVisible);
     };
 
+    const audioEndedHandler = () => {
+        setIsAudioPlaying(false);
+    };
+
     return (
         <>
             <Card style={cardStyle}>
-                <audio ref={audioRef} src={props.musicUrl} preload="metadata" />
+                <audio
+                    ref={audioRef}
+                    src={props.musicUrl}
+                    preload="metadata"
+                    autoPlay={true}
+                    onEnded={audioEndedHandler}
+                />
                 {audioDuration && (
                     <>
                         <Stack direction="row" spacing={1}>
@@ -126,6 +136,7 @@ export const MusicPlayer = (props) => {
                         />
                     </>
                 )}
+
                 <Stack direction="row" spacing={1.2}>
                     <div onClick={changeVolumeBarVisibility}>
                         {_volume === 0 ? (

@@ -4,9 +4,8 @@ import { MusicPlayer } from "./MusicPlayer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-export const PlayList = ({ songs }) => {
+export const PlayList = ({ songs, authors }) => {
     const [currentSongPlayed, setCurrentSongPlayed] = useState(0);
-    let audioRef = useRef();
 
     const changeToPrevSong = () => {
         // move to previous one
@@ -26,6 +25,7 @@ export const PlayList = ({ songs }) => {
         <Grid display="flex" alignItems="center" flexDirection="column">
             <MusicPlayer
                 musicUrl={songs[currentSongPlayed]}
+                author={authors[currentSongPlayed]}
                 nextSong={changeToNextSong}
             />
             <div>

@@ -150,7 +150,7 @@ export const MusicPlayer = (props) => {
                                 color="text.secondary"
                                 component="div"
                             >
-                                Florin Salam
+                                {props.author}
                             </Typography>
 
                             <AlbumIcon />

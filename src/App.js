@@ -3,23 +3,18 @@ import Box from "@mui/material/Box";
 import { PlayList } from "./components/PlayList";
 
 const App = () => {
-    const [songsUrls, setSongsUrls] = useState([]);
-    const [authorList, setAuthorList] = useState([]);
-
-    useEffect(() => {
-        fetch("https://mocki.io/v1/e3653440-6df3-498f-8dc0-8f213cff0ae5")
-            .then((val) => val.json())
-            .then((data) => {
-                let arrSongs = [];
-                let arrAuthors = [];
-                for (let index = 0; index < data.length; index++) {
-                    arrSongs.push(data[index]["songAddres"]);
-                    arrAuthors.push(data[index]["author"]);
-                }
-                setSongsUrls(arrSongs);
-                setAuthorList(arrAuthors);
-            });
-    }, []);
+    const [songsUrls, setSongsUrls] = useState([
+        "https://dl.musicbazz.ir/music/Rap/E/Eminem/Album/Eminem%20-%20This%20is%20Eminem-MusicBazZ.iR/20.%20Smack%20That%20(feat.%20Eminem).mp3",
+        "https://dl.musicbazz.ir/music/Rap/E/Eminem/Album/Eminem%20-%20This%20is%20Eminem-MusicBazZ.iR/02.%20%27Till%20I%20Collapse%20(feat.%20Nate%20Dogg).mp3",
+        "https://dl.musicbazz.ir/music/Rap/E/Eminem/Album/Eminem%20-%20This%20is%20Eminem-MusicBazZ.iR/03.%20Lose%20Yourself.mp3",
+        "https://dl.musicbazz.ir/music/Rap/E/Eminem/Album/Eminem%20-%20This%20is%20Eminem-MusicBazZ.iR/05.%20Venom%20(Music%20From%20The%20Motion%20Picture).mp3",
+    ]);
+    const [authorList, setAuthorList] = useState([
+        "Smack That (feat. Eminem)",
+        "Till I Collapse - Eminem",
+        "Lose Yourself - Eminem",
+        "Venom - Eminem",
+    ]);
 
     return (
         <div>

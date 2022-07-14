@@ -6,6 +6,7 @@ import {
     Typography,
     Box,
     Card,
+    Grid,
 } from "@mui/material";
 import { VolumeDown, VolumeUp } from "@mui/icons-material";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -18,7 +19,7 @@ import AlbumIcon from "@mui/icons-material/Album";
 
 const cardStyle = {
     width: "500px",
-    height: "70px",
+    height: "80px",
     margin: "25px 50px",
     padding: "25px 25px 25px 25px",
     backgroundColor: "rgb(179, 230, 255)",
@@ -83,6 +84,7 @@ export const MusicPlayer = (props) => {
         // destroy timers from memory(stop the next song play in the track)
         clearTimeout(timerObject);
         clearInterval(notificationTimer);
+
         // replay the audio
         audioRef.current.currentTime = 0;
         audioRef.current.play();
@@ -93,29 +95,30 @@ export const MusicPlayer = (props) => {
         audioRef.current.volume = value / 100;
     };
 
+    const fastForwardUpdate = (time) => {
+        setCurrentTime(time.toFixed(0));
+        updateCurrentTime(time);
+        setAudioProgress((time * 100) / audioDuration);
+    };
     const rightFastForward = () => {
-        audioRef.current.currentTime += 5;
-        setCurrentTime(audioRef.current.currentTime.toFixed(0));
-        updateCurrentTime(audioRef.current.currentTime);
-        setAudioProgress((audioRef.current.currentTime * 100) / audioDuration);
+        audioRef.current.currentTime += 10;
+        fastForwardUpdate(audioRef.current.currentTime);
     };
 
     const leftFastForward = () => {
-        audioRef.current.currentTime -= 5;
-        setCurrentTime(audioRef.current.currentTime.toFixed(0));
-        updateCurrentTime(audioRef.current.currentTime);
-        setAudioProgress((audioRef.current.currentTime * 100) / audioDuration);
+        audioRef.current.currentTime -= 10;
+        fastForwardUpdate(audioRef.current.currentTime);
     };
 
     const changeVolumeBarVisibility = () => {
         setIsVolumeBarVisible(!isVolumeBarVisible);
     };
 
-    const audioEndedHandler = () => {
-        let delay = 4000;
-        setIstimerCountDownVisible(true);
+    const startTimerBeforePlayingNextSong = (delay) => {
+        const oneSec = 1000;
+        delay += oneSec;
         const startTime = Date.now();
-        setTimerCountDown(3);
+        setTimerCountDown((delay - oneSec) / 1000);
         let notificationEverySecond = setInterval(() => {
             setTimerCountDown(
                 Math.floor((delay - (Date.now() - startTime)) / 1000)
@@ -127,9 +130,16 @@ export const MusicPlayer = (props) => {
             props.nextSong();
             clearInterval(notificationEverySecond);
             setIstimerCountDownVisible(false);
-            setTimerCountDown(3);
+            //setTimerCountDown((delay - oneSec) / 1000);
         }, delay);
         setTimerObject(timerObject);
+    };
+
+    const audioEndedHandler = () => {
+        // make visible the count down timer
+        setIstimerCountDownVisible(true);
+        // play next song in x seconds
+        startTimerBeforePlayingNextSong(3000);
     };
 
     return (
@@ -144,33 +154,47 @@ export const MusicPlayer = (props) => {
                 />
                 {audioDuration && (
                     <>
-                        <Stack direction="row" spacing={1}>
-                            <Typography
-                                variant="subtitle1"
-                                color="text.secondary"
-                                component="div"
-                            >
-                                {props.author}
-                            </Typography>
+                        <Grid container spacing={3}>
+                            <Grid item xs={4}>
+                                <Stack direction="row">
+                                    <Typography
+                                        variant="h6"
+                                        color="text.secondary"
+                                        component="div"
+                                        fontSize="small"
+                                    >
+                                        {props.author}
+                                    </Typography>
 
-                            <AlbumIcon />
-
-                            <Stack direction="row" sx={{ width: 80 }}></Stack>
-                            <Typography component="div" variant="h6">
-                                {currentTime}/{display(audioDuration)}
-                            </Typography>
-                            <Stack direction="row" sx={{ width: 80 }}></Stack>
-                            {istimerCountDownVisible && (
-                                <Typography
-                                    component="div"
-                                    variant="h6"
-                                    color="red"
-                                    className="counter-down-current-number"
+                                    <AlbumIcon />
+                                </Stack>
+                            </Grid>
+                            <Grid item xs>
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    flexDirection="column"
                                 >
-                                    {timerCoundDown}
-                                </Typography>
-                            )}
-                        </Stack>
+                                    <Typography component="div" variant="h6">
+                                        {currentTime}/{display(audioDuration)}
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item xs>
+                                <Box textAlign="right" marginRight="6px">
+                                    {istimerCountDownVisible && (
+                                        <Typography
+                                            component="div"
+                                            variant="h6"
+                                            color="red"
+                                            className="counter-down-current-number"
+                                        >
+                                            {timerCoundDown}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            </Grid>
+                        </Grid>
                         <LinearProgress
                             variant="determinate"
                             value={audioProgress}

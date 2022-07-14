@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Grid } from "@mui/material";
 import { MusicPlayer } from "./MusicPlayer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -9,9 +9,11 @@ export const PlayList = ({ songs, authors }) => {
 
     const changeToPrevSong = () => {
         // move to previous one
-        setCurrentSongPlayed(currentSongPlayed - 1);
+        if (currentSongPlayed - 1 >= 0) {
+            setCurrentSongPlayed(currentSongPlayed - 1);
+        }
 
-        if (currentSongPlayed === -1) {
+        if (currentSongPlayed === 0) {
             setCurrentSongPlayed(songs.length - 1);
         }
     };

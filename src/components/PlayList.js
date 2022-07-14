@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import { MusicPlayer } from "./MusicPlayer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -30,10 +30,38 @@ export const PlayList = ({ songs, authors }) => {
                 author={authors[currentSongPlayed]}
                 nextSong={changeToNextSong}
             />
-            <div>
-                <ArrowBackIcon onClick={changeToPrevSong} />
-                <ArrowForwardIcon onClick={changeToNextSong} />
-            </div>
+            <Grid container spacing={1}>
+                <Grid item xs>
+                    <Box textAlign="center" marginLeft="50px">
+                        <Typography
+                            variant="h6"
+                            color="text.secondary"
+                            component="div"
+                            fontSize="small"
+                        >
+                            {authors[currentSongPlayed - 1]}
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid item xs={4}>
+                    <Box textAlign="center">
+                        <ArrowBackIcon onClick={changeToPrevSong} />
+                        <ArrowForwardIcon onClick={changeToNextSong} />
+                    </Box>
+                </Grid>
+                <Grid item xs>
+                    <Box textAlign="center" marginRight="30px">
+                        <Typography
+                            variant="h6"
+                            color="text.secondary"
+                            component="div"
+                            fontSize="small"
+                        >
+                            {authors[currentSongPlayed + 1]}
+                        </Typography>
+                    </Box>
+                </Grid>
+            </Grid>
         </Grid>
     );
 };

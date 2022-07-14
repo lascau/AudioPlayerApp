@@ -1,0 +1,35 @@
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        transform-origin: center center;
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        transform-origin: center center;
+    }
+}
+@keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+        transform-origin: center center;
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+        transform-origin: center center;
+    }
+}
+.rotating {
+    position: absolute;
+    -webkit-animation: rotating 5s linear infinite;
+    animation: rotating 5s linear infinite;
+    transform-origin: center center;
+}
+
+.stopRotating {
+    position: absolute;
+    transform-origin: center center;
+}

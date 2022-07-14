@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
+import { Box, Typography, Stack } from "@mui/material";
 import { PlayList } from "./components/PlayList";
 
 const App = () => {
@@ -26,7 +26,12 @@ const App = () => {
                 alignItems="center"
                 flexDirection="column"
             >
+                <Typography component="div" variant="h6">
+                    Audio Player Radio(autoplay on)
+                </Typography>
                 <PlayList songs={songsUrls} authors={authorList} />
+                <Stack style={{ height: "400px" }}></Stack>
+                <footer>©Lascau Ionut Sebastian 2022</footer>
             </Box>
         </div>
     );

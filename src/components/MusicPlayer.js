@@ -15,14 +15,15 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import AlbumIcon from "@mui/icons-material/Album";
+import vinile from "../assets/vinile.png";
+import "./css/rotating.css";
 
 const cardStyle = {
     width: "500px",
     height: "80px",
     margin: "25px 50px",
     padding: "25px 25px 25px 25px",
-    backgroundColor: "rgb(179, 230, 255)",
+    backgroundColor: "#ACDEEE",
 };
 
 export const MusicPlayer = (props) => {
@@ -86,6 +87,7 @@ export const MusicPlayer = (props) => {
         clearInterval(notificationTimer);
 
         // replay the audio
+        setIsAudioPlaying(false);
         audioRef.current.currentTime = 0;
         audioRef.current.play();
     };
@@ -165,8 +167,28 @@ export const MusicPlayer = (props) => {
                                     >
                                         {props.author}
                                     </Typography>
-
-                                    <AlbumIcon />
+                                    <Box style={{ marginLeft: "3px" }}>
+                                        <div
+                                            className={
+                                                isAudioPlaying
+                                                    ? "stopRotating"
+                                                    : "rotating"
+                                            }
+                                            style={{
+                                                width: "26px",
+                                                height: "26px",
+                                            }}
+                                        >
+                                            <img
+                                                src={vinile}
+                                                style={{
+                                                    width: "26px",
+                                                    heigth: "26px",
+                                                }}
+                                                alt="logo"
+                                            />
+                                        </div>
+                                    </Box>
                                 </Stack>
                             </Grid>
                             <Grid item xs>

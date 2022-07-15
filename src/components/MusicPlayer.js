@@ -27,7 +27,9 @@ const cardStyle = {
 };
 
 export const MusicPlayer = (props) => {
-    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(
+        props.isAutoPlayAtStartTurnedOn
+    );
     const [currentTime, setCurrentTime] = useState("00:00");
     const [_volume, setVolume] = useState(50);
     const audioRef = useRef(new Audio(props.musicUrl));

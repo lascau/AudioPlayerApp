@@ -6,8 +6,11 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export const PlayList = ({ songs, authors }) => {
     const [currentSongPlayed, setCurrentSongPlayed] = useState(0);
+    const [isAutoPlayAtStartTurnedOn, setisAutoPlayAtStartTurnedOn] =
+        useState(true);
 
     const changeToPrevSong = () => {
+        setisAutoPlayAtStartTurnedOn(false);
         // move to previous one
         if (currentSongPlayed - 1 >= 0) {
             setCurrentSongPlayed(currentSongPlayed - 1);
@@ -19,6 +22,7 @@ export const PlayList = ({ songs, authors }) => {
     };
 
     const changeToNextSong = () => {
+        setisAutoPlayAtStartTurnedOn(false);
         // move to the next one
         setCurrentSongPlayed((currentSongPlayed + 1) % songs.length);
     };
@@ -29,6 +33,7 @@ export const PlayList = ({ songs, authors }) => {
                 musicUrl={songs[currentSongPlayed]}
                 author={authors[currentSongPlayed]}
                 nextSong={changeToNextSong}
+                isAutoPlayAtStartTurnedOn={isAutoPlayAtStartTurnedOn}
             />
             <Grid container spacing={1}>
                 <Grid item xs>

@@ -70,11 +70,13 @@ export const MusicPlayer = (props) => {
     };
 
     const startAudio = () => {
+        console.log(isAudioPlaying);
         audioRef.current.play();
         setIsAudioPlaying(!isAudioPlaying);
     };
 
     const pauseAudio = () => {
+        console.log(isAudioPlaying);
         audioRef.current.pause();
         setIsAudioPlaying(!isAudioPlaying);
     };
@@ -146,6 +148,7 @@ export const MusicPlayer = (props) => {
 
     return (
         <>
+            {console.log(`init ${isAudioPlaying}`)}
             <Card style={cardStyle}>
                 <audio
                     ref={audioRef}

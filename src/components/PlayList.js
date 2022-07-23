@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Grid, Typography, Box } from "@mui/material";
-import { MusicPlayer } from "./MusicPlayer";
+import { MusicPlayer } from "./MusicPlayer/MusicPlayer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export const PlayList = ({ songs, authors }) => {
     const [currentSongPlayed, setCurrentSongPlayed] = useState(0);
     const [isAutoPlayAtStartTurnedOn, setisAutoPlayAtStartTurnedOn] =
-        useState(true);
+        useState(false);
 
     const changeToPrevSong = () => {
         setisAutoPlayAtStartTurnedOn(false);

@@ -1,0 +1,46 @@
+.cardStyle {
+    width: 500px;
+    height: 100px;
+    margin: auto;
+    padding: 25px 25px 25px 25px;
+}
+
+/* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .cardStyle {
+        width: 500px;
+        height: 100px;
+        margin: auto;
+        padding: 25px 25px 25px 25px;
+    }
+}
+
+/* For Mobile Phones Portrait or Landscape View */
+@media screen and (max-device-width: 640px) {
+    .cardStyle {
+        width: 350px;
+        height: 120px;
+        margin: auto;
+        padding: 25px 25px 25px 25px;
+    }
+}
+
+/* For iPhone 12 Pro Portrait or Landscape View */
+@media (device-height: 844px) and (device-width: 390px) and (-webkit-min-device-pixel-ratio: 2) {
+    .cardStyle {
+        width: 350px;
+        height: 120px;
+        margin: auto;
+        padding: 25px 25px 25px 25px;
+    }
+}
+
+/* For Galaxy Fold Portrait or Landscape View*/
+@media (device-width: 280px) and (device-height: 653px) and (-webkit-min-device-pixel-ratio: 2) {
+    .cardStyle {
+        width: 250px;
+        height: 160px;
+        margin: auto;
+        padding: 25px 25px 25px 25px;
+    }
+}

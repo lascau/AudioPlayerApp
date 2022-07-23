@@ -15,16 +15,9 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-import vinile from "../assets/vinile.png";
-import "./css/rotating.css";
-
-const cardStyle = {
-    width: "500px",
-    height: "80px",
-    margin: "25px 50px",
-    padding: "25px 25px 25px 25px",
-    backgroundColor: "#ACDEEE",
-};
+import vinile from "../../assets/vinile.png";
+import "./vinyl.scss";
+import "./music-player.scss";
 
 export const MusicPlayer = (props) => {
     const [isAudioPlaying, setIsAudioPlaying] = useState(
@@ -148,7 +141,7 @@ export const MusicPlayer = (props) => {
 
     return (
         <>
-            <Card style={cardStyle}>
+            <Card className="cardStyle">
                 <audio
                     ref={audioRef}
                     src={props.musicUrl}
